@@ -1,0 +1,212 @@
+Total_cont=int(0)                 #Esta variable cuenta la cantidad de asientos en total que hay vendidos
+gananciatotal=int(0)              #Esta variable posee la suma total de las ventas de todos los asientos
+contadorEspacio=int(0)            #Esta variable cuenta la cantidad de asientos de espacio para pies vendidos
+contadorNormal=int(0)             #Esta variable cuenta la cantidad de asientos normales vendidos
+contadorReclinable=int(0)         #Esta variable cuenta la cantidad de asientos reclinables vendidos
+gananciatotal_Espacio=int(0)      #Esta variable cuenta la ganancia con asientos de Espacio para pies vendidos
+gananciatotal_Normal=int(0)       #Esta variable cuenta la ganancia con asientos normales vendidos
+gananciatotal_Reclinable=int(0)   #Esta variable cuenta la ganancia con asientos reclinables vendidos
+cantidadRuts=int(1)               #Esta sirve como contador para los ciclos for para saber cuantos tiene que contar
+none=int(0)                       #None es none     
+asiento = [none] * 6
+rut_personas=[0]                  #Lista de Ruts
+rutReemplazo=int(0)               #Variable que se usa como indice de reemplazo del Rut
+cant_personas=int(0)              #Cantidad de personas en el avion
+opcion=int(0)                     #Variable pasa seleccionar opciones
+asientos_Maximos= int(198)
+
+def desplegarMenu():
+	print("-------------  Menu  --------------")    		#
+	print("1. Compra de pasajes")					# 
+	print("2. Mostrar ubicaciones disponibles")			#
+	print("3. Ver listado de Pasajeros")				# Hecho por Felipe Escobedo
+	print("4. Buscar Pasajero")					#        
+	print("5. Reasignar asiento")					#
+	print("6. Mostrar Ganancias Totales")				#
+	print("7. Salir")						#
+
+def show_avion():
+	print("  ",end="")
+	for pos1 in range (1,34):
+		print(str(pos1)+" ",end="")
+	print("")
+	for pos0 in range (6):
+		print(chr(70-pos0)+" ",end="")
+		for pos1 in range(33):
+			if(pos1<8):
+				print(str(asiento[pos0][pos1])+" ",end="")
+			else:
+				print (str(asiento[pos0][pos1])+"  ", end="")
+		print("")
+	print("  ",end="")
+	for pos1 in range(1,34):                      						#
+		if(pos1>=1) and (pos1<=5):							#
+			print("E"+" ",end="")							# Hecho por Jose Solis
+		elif(pos1>=6) and (pos1<=8):							#
+			print("N"+" ",end="")							#
+		elif(pos1==9):
+			print("N"+"  ",end="")
+		elif(pos1>=10) and (pos1<=11):
+			print("R"+"  ",end="")
+		elif(pos1==12):
+			print("E"+"  ",end="")
+		elif(pos1>=13) and (pos1<=33):
+			print("N"+"  ",end="")
+	print("")
+
+def mostrarCuadro():
+  print("--------------------  Ganancias Totales  ------------------------")
+  print("Tipo de Asiento             "+"      Cantiadad           "+"Total")								#
+  print("Asiento Común          $60.000          "+str(contadorNormal)+"             $"+str(gananciatotal_Normal))			#
+  print("Espacio para piernas   $80.000          "+str(contadorEspacio)+"            $"+str(gananciatotal_Espacio))			# Hecho por Felipe Escobedo
+  print("No reclinable          $50.000          "+str(contadorReclinable)+"         $"+str(gananciatotal_Reclinable))			#
+  print("TOTAL                                   "+str(Total_cont)+"                 $"+str(gananciatotal))
+
+def verificarVentaRut(rut): #Esta funcion verifica si el rut esta dentro de las ventas y retorna encontrado		
+	for i in range (cantidadRuts):											#
+		encontrado=True												#
+		if(rut_personas[i]==rut):										# Hecho por Felipe Escobedo
+			encontrado=False										#
+			break												#
+	return encontrado
+
+def buscador_rut(rut): #Esta función busca el rut ingresado por el usuario y si lo encuentra retorna encontrado         
+	for i in range (cantidadRuts):											#
+		encontrado=False											#
+		if(rut_personas[i]==rut):										#	Hecho por Felipe Escobedo	
+			encontrado=True											#
+			break												#
+	return encontrado												#
+
+ 
+
+for i in range (0,6):
+	asiento [i] = [none] * 33
+while (opcion!=7):
+	desplegarMenu()
+	opcion=int(input("Seleccione una opcion: "))
+	if(opcion==1):		
+		cant_boleto=int(input("Ingrese la cantidad de boletos que desea: "))
+		contador_while=int(0)
+		if (asientos_Maximos - Total_cont > 0) and (cant_boleto <= asientos_Maximos - Total_cont  ):
+			
+			while(contador_while<cant_boleto):
+				rut=int(input("Ingrese el rut de la persona sin DV: "))
+				if(verificarVentaRut(rut)):
+					rut_personas.append(rut)
+					cantidadRuts=cantidadRuts+1
+					entradaFila=int(0)
+					entradaColumna=int(0)									
+					while (entradaFila<1):
+						show_avion()						
+						in_filas = str(input("Favor ingresar la letra de la fila (A-F) ")) 		
+						filas=in_filas.upper()								   					#
+						if (filas=='A'):								    					#
+							fila=ord(filas)-59							    					#
+							entradaFila=entradaFila+1											#
+						elif(filas=='B'):								    					# Hecho por Jose Solis
+							fila= ord(filas)-61							    					#
+							entradaFila=entradaFila+1											#
+						elif(filas=='C'):								    					#		
+							fila= ord(filas)-63							   					#			
+							entradaFila=entradaFila+1											#
+						elif(filas=='D'):
+							fila= ord(filas)-65
+							entradaFila=entradaFila+1
+						elif(filas=='E'):
+							fila= ord(filas)-67
+							entradaFila=entradaFila+1
+						elif(filas=='F'):
+							fila= ord(filas)-69
+							entradaFila=entradaFila+1
+						
+						else:
+							print("La fila ingresada no es valida")
+					while(entradaColumna<1):
+						show_avion()				
+						columna = int(input("Favor ingresar el numero de columna(1-33) "))
+						if(columna>=1) and (columna<=33):
+							entradaColumna=entradaColumna+1
+						else:
+							print("La columna ingresada no es valida")
+
+					if(asiento[fila - 1][columna - 1] ==0):										#
+						cant_personas=cant_personas+1										#
+						contador_while=contador_while+1										#
+						                                                                   					#	
+						asiento[fila-1][columna - 1] = "X"									#
+						if(columna>=1) and (columna<=5):									#	Hecho por Jose Solis
+							valorasiento=80000										#
+							gananciatotal_Espacio=gananciatotal_Espacio+valorasiento					#
+							contadorEspacio=contadorEspacio+1								#
+						elif(columna>=6) and (columna<=9):						 	 		#
+							valorasiento=60000										#
+							gananciatotal_Normal=gananciatotal_Normal+valorasiento
+							contadorNormal=contadorNormal+1
+						elif(columna>=10) and (columna<=11):
+							valorasiento=50000
+							gananciatotal_Reclinable=gananciatotal_Reclinable+valorasiento
+							contadorReclinable=contadorReclinable+1
+						elif(columna==12):
+							valorasiento=80000
+							gananciatotal_Espacio=gananciatotal_Espacio+valorasiento
+							contadorEspacio=contadorEspacio+1
+						elif(columna>=13) and (columna<=33):
+							valorasiento=60000
+							gananciatotal_Normal=gananciatotal_Normal+valorasiento
+							contadorNormal=contadorNormal+1
+						Total_cont=contadorEspacio+contadorNormal+contadorReclinable
+						gananciatotal=gananciatotal_Espacio+gananciatotal_Normal+gananciatotal_Reclinable
+						print ("Reserva Exitosa")
+					else:
+						rut_personas.remove(rut)
+						cantidadRuts=cantidadRuts-1
+						print ("Asiento ocupado")
+				else:
+					print("El rut ingresado se encuentra registrado")
+
+
+				show_avion()
+		else:
+			print("No Quedan mas asientos o ingreso mal el numero")
+
+     
+
+
+        
+          
+      
+
+
+	elif(opcion==2):
+		show_avion()													#
+	elif(opcion==3):													#
+		for rut1 in range(cantidadRuts):										#
+			print(" ",end="")											# Hecho por Felipe escobedo
+			if(rut_personas[rut1]!=0):										#
+				rut_personas.sort()										#		
+				print("Los RUT registrados en el sistema son: "+str(rut_personas[rut1]))
+			
+	elif(opcion==4):
+		rut=int(input("Ingrese el rut de la persona sin DV: "))								#
+		if(buscador_rut(rut)):												#
+			print("RUT encontrado")											# Hecho por Jose solis
+		else:														#
+			print("RUT no encontrado")										#
+	elif(opcion==5):
+		rutReemplazo=int(input("Ingrese el rut que desea reemplazar: "))						#
+		if(buscador_rut(rutReemplazo)):											#
+			rut_personas.remove(rutReemplazo)									#
+			cantidadRuts=cantidadRuts-1										#
+			nuevo_rut=int(input("Ingrese el nuevo RUT a registrar: "))						# Hecho por Jose solis
+			if(verificarVentaRut(nuevo_rut)):									#
+				rut_personas.append(nuevo_rut)									#
+				cantidadRuts=cantidadRuts+1									#
+			else:
+				cantidadRuts=cantidadRuts+1	
+				rut_personas.append(rutReemplazo)
+				print("El RUT ya se encuentra registrado")
+		else:
+			print("El rut ingresado no se encuentra en el sistema")					
+	elif(opcion==6):
+		mostrarCuadro()
